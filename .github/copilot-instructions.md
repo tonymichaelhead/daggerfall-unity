@@ -24,9 +24,19 @@ We follow a strict 3-layer architecture to keep the fork cleanly rebasable on up
 - **NEVER** edit files inside `dfu-coop-reference/`.
 - **NEVER** copy code verbatim without deliberate redesign. The reference had fatal flaws (e.g. world state tied to player prefab, client-authoritative vitals, no headless support, disabled interest management).
 - Use it to understand DFU quirks (terrain floating origin seams, exterior frame coords, dungeon generation parameters, sprite billboard rendering).
+- Treat reference implementations as behavioral evidence, not a source of naming or design conventions. Do not inherit its variable names, method names, structure, or abstractions by default; redesign from the requirement using clear, conventional C# names and this project's layer boundaries.
+- Prefer simple, readable, maintainable code that another developer can understand locally. Follow established DFU/DFCoop patterns and industry-standard practices when they improve clarity, rather than preserving legacy fork terminology or implementation details.
 
 ## Coding Standards
 
 - Target Unity: 2019.4 LTS baseline (C# 7.3 / .NET Standard 2.0).
 - Keep dedicated-server execution path free of UI, Camera, AudioListener, and `GameManager.Instance.PlayerObject` assumptions.
 - World state (time, weather, loot, doors) must live on server-owned singletons, never on player prefabs.
+
+## Testing
+
+- For every DFCoop behavior change, add or update focused automated tests when the behavior can be tested without a full Unity player run.
+- Prioritize tests for authority boundaries, message validation, lifecycle transitions, coordinate conversion, and persistence over superficial getter/setter coverage.
+- Extract pure helpers for deterministic logic so they can be covered by EditMode tests.
+- Keep runtime smoke tests for DFU/Mirror integration and document the expected log evidence when an automated test is impractical.
+- Before committing, run the focused EditMode tests for touched DFCoop code and perform the relevant headless or graphical integration smoke test for networking/world-transition changes.
