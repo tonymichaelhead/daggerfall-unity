@@ -40,3 +40,10 @@ We follow a strict 3-layer architecture to keep the fork cleanly rebasable on up
 - Extract pure helpers for deterministic logic so they can be covered by EditMode tests.
 - Keep runtime smoke tests for DFU/Mirror integration and document the expected log evidence when an automated test is impractical.
 - Before committing, run the focused EditMode tests for touched DFMP code and perform the relevant headless or graphical integration smoke test for networking/world-transition changes.
+
+## Roadmap & Milestone Discipline
+
+- Strictly follow `Assets/DFMP/ROADMAP.md` for milestone scope, architectural rules, MVP boundaries, and server-owned vs client-local responsibilities.
+- When planning or implementing features, confirm the target milestone in `Assets/DFMP/ROADMAP.md` and adhere to its design principles.
+- Do not jump ahead into out-of-scope milestone features or violate the authoritative/personal state boundaries defined in the roadmap.
+
